@@ -127,9 +127,11 @@ for n in range(5):
 arm_and_takeoff(10) 
 
 # Fly North for 20 sec
-print("Going north for 20 seconds ...")
-point1 = LocationGlobalRelative(50, -86.241484,0)
-travel_north(point1)
+#print("Going north for 20 seconds ...")
+#point1 = LocationGlobalRelative(50, -86.241484,0)
+#travel_north(point1)
+
+# CONNECT TO PATTERNS
 
 # Land them
 land_drones()
