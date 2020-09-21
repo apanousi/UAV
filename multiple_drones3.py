@@ -136,10 +136,11 @@ arm_and_takeoff(10)
 
 
 # CONNECT TO PATTERNS
+print("Starting Line Dancing Pattern")
 if line(copters) < 0:
     print("Error with line pattern")
     exit(1)
-print("Started Line Dancing Pattern")
+print("Finished Line Dancing Pattern")
 
 # Land them
 land_drones()
