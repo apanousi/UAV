@@ -1,10 +1,14 @@
 # UAV
 All UAV Group Work
 
+Members:
+Ashley Panousis
+Eric Tsai
+Claire Bailie
+
 TODO:
-- basic setup of classes/files
 - Matplotlib connection
 - Ground control setup
-- pattern generation (line dancing)
 - pattern generation (cube)
-- connect all files/classes
+- connect all files
+- submit
