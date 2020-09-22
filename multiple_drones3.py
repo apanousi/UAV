@@ -12,7 +12,7 @@ import time
 from dronekit_sitl import SITL
 from dronekit import Vehicle, VehicleMode, connect, LocationGlobalRelative
 from line_pattern import * 
-from cube_pattern import * 
+#from cube_pattern import * 
 
 copters = []
 sitls = []
@@ -125,6 +125,8 @@ for n in range(5):
     coordinates = [coordinates[0],coordinates[1]-(0.00005*n),coordinates[2]]
     connect_virtual_vehicle(n,coordinates)
 
+
+
 # Arm and takeoff to 10 meters
 arm_and_takeoff(10) 
 
@@ -133,7 +135,7 @@ arm_and_takeoff(10)
 #point1 = LocationGlobalRelative(50, -86.241484,0)
 #travel_north(point1)
 
-
+#cube_pattern()
 
 # CONNECT TO PATTERNS
 print("Starting Line Dancing Pattern")
