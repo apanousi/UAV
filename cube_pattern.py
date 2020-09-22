@@ -1,7 +1,7 @@
 import time
 from dronekit_sitl import SITL
 from dronekit import Vehicle, VehicleMode, connect, LocationGlobalRelative
-from multiple_drones3 import copters
+#from multiple_drones3 import copters
 
 #CUBE pattern
 def cube_pattern(copters):
