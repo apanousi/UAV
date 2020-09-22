@@ -135,7 +135,7 @@ arm_and_takeoff(10)
 #point1 = LocationGlobalRelative(50, -86.241484,0)
 #travel_north(point1)
 
-cube_pattern()
+cube_pattern(copters)
 
 # CONNECT TO PATTERNS
 print("Starting Line Dancing Pattern")
