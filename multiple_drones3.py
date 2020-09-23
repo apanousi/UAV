@@ -135,14 +135,18 @@ arm_and_takeoff(10)
 #point1 = LocationGlobalRelative(50, -86.241484,0)
 #travel_north(point1)
 
-cube_pattern(copters)
+# # CONNECT TO PATTERNS
+# print("Starting Line Dancing Pattern")
+# if line(copters) < 0:
+#     print("Error with line pattern")
+#     exit(1)
+# print("Finished Line Dancing Pattern")
 
-# CONNECT TO PATTERNS
-print("Starting Line Dancing Pattern")
-if line(copters) < 0:
-    print("Error with line pattern")
+print("Starting Cube Pattern")
+if cube_pattern(copters) < 0:
+    print("Error with cube pattern")
     exit(1)
-print("Finished Line Dancing Pattern")
+print("Finished Cube Pattern")
 
 # Land them
 land_drones()
