@@ -22,7 +22,7 @@ def reached_point(waypoint, copters, index):
 
     # distance between points in meters
     distance = (R * c) * 1000
-    print("Distance to waypoint: %.2f m" % distance)
+    #print("Distance to waypoint: %.2f m" % distance)
     if distance <= 1:
         return True
     else:
@@ -48,22 +48,85 @@ def cube_pattern(copters):
         print("-----")
         time.sleep(3)
     
-    print("reached starting point")
-
-    # middle(copters, 0)
-    # top_left(copters,1)
-    
-    # time.sleep(3)
     # 1     2
     #    0
     # 4     3
 
-    # spinning clockwise based on drone[0]
-    # print("begin rotation")
-    # first_rotation(copters)
-    # second_rotation(copters)
-    # third_rotation(copters)
-    # fourth_rotation(copters)
+    print("reached starting point")
+    print("starting rotation")
+
+    top_l = top_left(copters, 4)
+    top_r = top_right(copters, 1)
+    bottom_l = bottom_left(copters, 3)
+    bottom_r = bottom_right(copters, 2)
+
+    # 4     1
+    #    0
+    # 3     2
+
+    while (mid is False) or (top_l is False) or (top_r is False) or (bottom_l is False) or (bottom_r is False):
+        top_l = top_left(copters, 4)
+        top_r = top_right(copters, 1)
+        bottom_l = bottom_left(copters, 3)
+        bottom_r = bottom_right(copters, 2)
+        print("-----")
+        time.sleep(3)
+    
+    print("second rotation")
+    top_l = top_left(copters, 3)
+    top_r = top_right(copters, 4)
+    bottom_l = bottom_left(copters, 2)
+    bottom_r = bottom_right(copters, 1)
+
+    while (mid is False) or (top_l is False) or (top_r is False) or (bottom_l is False) or (bottom_r is False):
+        top_l = top_left(copters, 3)
+        top_r = top_right(copters, 4)
+        bottom_l = bottom_left(copters, 2)
+        bottom_r = bottom_right(copters, 1)
+        print("-----")
+        time.sleep(3)
+
+    # 3     4
+    #    0
+    # 2     1
+
+    print("third rotation")
+    top_l = top_left(copters, 2)
+    top_r = top_right(copters, 3)
+    bottom_l = bottom_left(copters, 1)
+    bottom_r = bottom_right(copters, 4)
+
+    while (mid is False) or (top_l is False) or (top_r is False) or (bottom_l is False) or (bottom_r is False):
+        top_l = top_left(copters, 2)
+        top_r = top_right(copters, 3)
+        bottom_l = bottom_left(copters, 1)
+        bottom_r = bottom_right(copters, 4)
+        print("-----")
+        time.sleep(3)    
+
+    # 2     3
+    #    0
+    # 1     4
+
+    print("last rotation")
+    top_l = top_left(copters, 1)
+    top_r = top_right(copters, 2)
+    bottom_l = bottom_left(copters, 4)
+    bottom_r = bottom_right(copters, 3)
+
+    while (mid is False) or (top_l is False) or (top_r is False) or (bottom_l is False) or (bottom_r is False):
+        top_l = top_left(copters, 1)
+        top_r = top_right(copters, 2)
+        bottom_l = bottom_left(copters, 4)
+        bottom_r = bottom_right(copters, 3)
+        print("-----")
+        time.sleep(3)     
+    
+    # 1     2
+    #    0
+    # 4     3
+
+    print("cube pattern finished!")
 
     return 0
 
@@ -81,8 +144,6 @@ def middle(copters, index):
     else:
         return False
 
-
-
 def top_left(copters, index):
     lat = copters[0].location.global_relative_frame.lat - 0.00005
     lon = copters[0].location.global_relative_frame.lon + 0.00005
@@ -96,11 +157,6 @@ def top_left(copters, index):
         return True
     else:
         return False
-    
-    # point = LocationGlobalRelative(lat, lon, alt)
-    # copters[index].simple_goto(point)
-    # print("copter %d is at lat:%f lon:%f alt:%f" %(index,lat,lon,alt))
-    # time.sleep(10)
 
 
 def top_right(copters, index):
@@ -143,54 +199,3 @@ def bottom_right(copters, index):
         return True
     else:
         return False
-
-
-def first_rotation(copters):
-    #spin first quarter (clockwise)
-    print("begin first rotation")
-    top_right(copters, 1)
-    bottom_right(copters, 2)
-    bottom_left(copters, 3)
-    top_left(copters, 4)
-    time.sleep(3)
-    # 4     1
-    #    0
-    # 3     2
-
-def second_rotation(copters):
-    #spin second quarter (clockwise)
-    print("begin second rotation")
-    top_right(copters, 4)
-    bottom_right(copters, 1)
-    bottom_left(copters, 2)
-    top_left(copters, 3)
-    time.sleep(3)
-    # 3     4
-    #    0
-    # 2     1
-
-def third_rotation(copters):
-    #spin third quarter (clockwise)
-    print("begin third rotation")
-    top_right(copters, 3)
-    bottom_right(copters, 4)
-    bottom_left(copters, 1)
-    top_left(copters, 2)
-    time.sleep(3)
-    # 2     3
-    #    0
-    # 1     4
-
-def fourth_rotation(copters):
-    #spin fourth quarter (clockwise)
-    print("begin fourth rotation")
-    top_left(copters, 1)
-    top_right(copters, 2)
-    bottom_left(copters, 4)
-    bottom_right(copters, 3)
-    time.sleep(3)
-    # 1     2
-    #    0
-    # 4     3
-
-
