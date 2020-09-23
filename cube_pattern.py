@@ -32,12 +32,11 @@ def reached_point(waypoint, copters, index):
 def cube_pattern(copters):
 
     lats = []
-    for copter in copters:
-        lats[copter] = []
-    
     lons = []
-    for copter in copters:
-        lons[copter] = []
+    indexes = [0, 1, 2, 3, 4]
+    for i in indexes:
+        lats.append(list())
+        lons.append(list())
 
     #initializing the starting point
     print("initializing the starting point")
@@ -56,10 +55,10 @@ def cube_pattern(copters):
         print("-----")
         
         # plotting
-        for i in lats:
+        for i in indexes:
             lats[i].append(copters[i].location.global_relative_frame.lat)
-        for i in lons:
-            lons[i].append(copters[i].location.global_relative_frame.lat)
+        for i in indexes:
+            lons[i].append(copters[i].location.global_relative_frame.lon)
 
         time.sleep(3)
     
@@ -87,10 +86,10 @@ def cube_pattern(copters):
         print("-----")
 
         # plotting
-        for i in lats:
+        for i in indexes:
             lats[i].append(copters[i].location.global_relative_frame.lat)
-        for i in lons:
-            lons[i].append(copters[i].location.global_relative_frame.lat)
+        for i in indexes:
+            lons[i].append(copters[i].location.global_relative_frame.lon)
 
         time.sleep(3)
     
@@ -108,10 +107,10 @@ def cube_pattern(copters):
         print("-----")
 
         # plotting
-        for i in lats:
+        for i in indexes:
             lats[i].append(copters[i].location.global_relative_frame.lat)
-        for i in lons:
-            lons[i].append(copters[i].location.global_relative_frame.lat)
+        for i in indexes:
+            lons[i].append(copters[i].location.global_relative_frame.lon)
 
         time.sleep(3)
 
@@ -133,10 +132,10 @@ def cube_pattern(copters):
         print("-----")
 
         # plotting
-        for i in lats:
+        for i in indexes:
             lats[i].append(copters[i].location.global_relative_frame.lat)
-        for i in lons:
-            lons[i].append(copters[i].location.global_relative_frame.lat)
+        for i in indexes:
+            lons[i].append(copters[i].location.global_relative_frame.lon)
 
         time.sleep(3)    
 
@@ -158,10 +157,10 @@ def cube_pattern(copters):
         print("-----")
 
         # plotting
-        for i in lats:
+        for i in indexes:
             lats[i].append(copters[i].location.global_relative_frame.lat)
-        for i in lons:
-            lons[i].append(copters[i].location.global_relative_frame.lat)
+        for i in indexes:
+            lons[i].append(copters[i].location.global_relative_frame.lon)
 
         time.sleep(3)     
     

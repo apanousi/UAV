@@ -9,23 +9,32 @@ from dronekit import Vehicle, VehicleMode, connect, LocationGlobalRelative
 def line(copters):
     #Overall pattern
 
-    form_increasing_line(copters)
-    return_center_all(copters)
-
-    even_up(copters)
-    form_increasing_line(copters)
-    even_down(copters)
-    even_up(copters)
-    return_center_all(copters)
-
-    move_down(copters[3], 2, 3)
-    move_up(copters[0], 10, 0)
-    move_up(copters[4], 10, 4)
-    form_increasing_line(copters)
-
-    return_center_all(copters)
+    done = False
+    alts = []
+    start = time.time()
+    indexes = [0, 1, 2, 3, 4]
+    for i in indexes:
+        alts[i] = []
     
-    return 0
+    while done is False:
+        form_increasing_line(copters)
+        return_center_all(copters)
+
+        even_up(copters)
+        form_increasing_line(copters)
+        even_down(copters)
+        even_up(copters)
+        return_center_all(copters)
+
+        move_down(copters[3], 2, 3)
+        move_up(copters[0], 10, 0)
+        move_up(copters[4], 10, 4)
+        form_increasing_line(copters)
+
+        return_center_all(copters)
+        done = True
+    
+    return (0, alts)
 
 def form_increasing_line(copters):
     move_up(copters[1], 1, 1)

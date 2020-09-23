@@ -136,9 +136,10 @@ arm_and_takeoff(10)
 #point1 = LocationGlobalRelative(50, -86.241484,0)
 #travel_north(point1)
 
-# # CONNECT TO PATTERNS
+# CONNECT TO PATTERNS
 # print("Starting Line Dancing Pattern")
-# if line(copters) < 0:
+# return_line = line(copters)
+# if return_line[0] < 0:
 #     print("Error with line pattern")
 #     exit(1)
 # print("Finished Line Dancing Pattern")
@@ -161,10 +162,16 @@ for c in copters:
 for s in sitls:
     s.stop()
 
+indexes = [0, 1, 2, 3, 4]
+
 # line plot
+# f = plt.figure(1)
+# for i in indexes:
+#     plt.plot(return_line[2][i], return_line[1][i], label="Drone %d"%(i+1))
 
 # cube plot
-for i in return_cube[1]:
+#g = plt.figure(2)
+for i in indexes:
     plt.plot(return_cube[2][i], return_cube[1][i], label="Drone %d"%(i+1))
 plt.xlabel("longitude")
 plt.ylabel("latitude")
