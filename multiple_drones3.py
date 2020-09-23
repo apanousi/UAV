@@ -11,8 +11,9 @@ Full documentation is provided at http://python.dronekit.io/examples/simple_goto
 import time
 from dronekit_sitl import SITL
 from dronekit import Vehicle, VehicleMode, connect, LocationGlobalRelative
-from line_pattern import * 
-from cube_pattern import * 
+from line_pattern import line
+from cube_pattern import cube_pattern 
+import matplotlib.pyplot as plt
 
 copters = []
 sitls = []
@@ -143,7 +144,8 @@ arm_and_takeoff(10)
 # print("Finished Line Dancing Pattern")
 
 print("Starting Cube Pattern")
-if cube_pattern(copters) < 0:
+return_cube = cube_pattern(copters)
+if return_cube[0] < 0:
     print("Error with cube pattern")
     exit(1)
 print("Finished Cube Pattern")
@@ -158,3 +160,13 @@ for c in copters:
 # Shut down simulators
 for s in sitls:
     s.stop()
+
+# line plot
+
+# cube plot
+for i in return_cube[1]:
+    plt.plot(return_cube[2][i], return_cube[1][i], label="Drone %d"%(i+1))
+plt.xlabel("longitude")
+plt.ylabel("latitude")
+
+plt.show()

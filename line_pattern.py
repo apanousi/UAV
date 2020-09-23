@@ -25,7 +25,7 @@ def line(copters):
 
     return_center_all(copters)
     
-    return 0;
+    return 0
 
 def form_increasing_line(copters):
     move_up(copters[1], 1, 1)

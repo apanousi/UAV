@@ -31,6 +31,14 @@ def reached_point(waypoint, copters, index):
 #CUBE pattern
 def cube_pattern(copters):
 
+    lats = []
+    for copter in copters:
+        lats[copter] = []
+    
+    lons = []
+    for copter in copters:
+        lons[copter] = []
+
     #initializing the starting point
     print("initializing the starting point")
     mid = middle(copters, 0)
@@ -46,6 +54,13 @@ def cube_pattern(copters):
         bottom_l = bottom_left(copters, 4)
         bottom_r = bottom_right(copters, 3)
         print("-----")
+        
+        # plotting
+        for i in lats:
+            lats[i].append(copters[i].location.global_relative_frame.lat)
+        for i in lons:
+            lons[i].append(copters[i].location.global_relative_frame.lat)
+
         time.sleep(3)
     
     # 1     2
@@ -70,6 +85,13 @@ def cube_pattern(copters):
         bottom_l = bottom_left(copters, 3)
         bottom_r = bottom_right(copters, 2)
         print("-----")
+
+        # plotting
+        for i in lats:
+            lats[i].append(copters[i].location.global_relative_frame.lat)
+        for i in lons:
+            lons[i].append(copters[i].location.global_relative_frame.lat)
+
         time.sleep(3)
     
     print("second rotation")
@@ -84,6 +106,13 @@ def cube_pattern(copters):
         bottom_l = bottom_left(copters, 2)
         bottom_r = bottom_right(copters, 1)
         print("-----")
+
+        # plotting
+        for i in lats:
+            lats[i].append(copters[i].location.global_relative_frame.lat)
+        for i in lons:
+            lons[i].append(copters[i].location.global_relative_frame.lat)
+
         time.sleep(3)
 
     # 3     4
@@ -102,6 +131,13 @@ def cube_pattern(copters):
         bottom_l = bottom_left(copters, 1)
         bottom_r = bottom_right(copters, 4)
         print("-----")
+
+        # plotting
+        for i in lats:
+            lats[i].append(copters[i].location.global_relative_frame.lat)
+        for i in lons:
+            lons[i].append(copters[i].location.global_relative_frame.lat)
+
         time.sleep(3)    
 
     # 2     3
@@ -120,15 +156,20 @@ def cube_pattern(copters):
         bottom_l = bottom_left(copters, 4)
         bottom_r = bottom_right(copters, 3)
         print("-----")
+
+        # plotting
+        for i in lats:
+            lats[i].append(copters[i].location.global_relative_frame.lat)
+        for i in lons:
+            lons[i].append(copters[i].location.global_relative_frame.lat)
+
         time.sleep(3)     
     
     # 1     2
     #    0
     # 4     3
 
-    print("cube pattern finished!")
-
-    return 0
+    return (0, lats, lons)
 
 def middle(copters, index):
     lat = copters[0].location.global_relative_frame.lat
