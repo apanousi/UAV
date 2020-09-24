@@ -14,6 +14,7 @@ from dronekit import Vehicle, VehicleMode, connect, LocationGlobalRelative
 from line_pattern import line
 from cube_pattern import cube_pattern 
 import matplotlib.pyplot as plt
+import numpy as np
 
 copters = []
 sitls = []
@@ -166,8 +167,11 @@ indexes = [0, 1, 2, 3, 4]
 
 # line plot
 # f = plt.figure(1)
+
+print(len(return_line[2]))
+print(len(return_line[1]))
 for i in indexes:
-    plt.plot(return_line[2][i], return_line[1][i], label="Drone %d"%(i+1))
+    plt.plot(return_line[2][i], return_line[1], label="Drone %d"%(i+1))
 plt.xlabel("time in seconds")
 plt.ylabel("altitude")
 
