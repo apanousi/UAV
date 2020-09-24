@@ -137,19 +137,19 @@ arm_and_takeoff(10)
 #travel_north(point1)
 
 # CONNECT TO PATTERNS
-# print("Starting Line Dancing Pattern")
-# return_line = line(copters)
-# if return_line[0] < 0:
-#     print("Error with line pattern")
-#     exit(1)
-# print("Finished Line Dancing Pattern")
-
-print("Starting Cube Pattern")
-return_cube = cube_pattern(copters)
-if return_cube[0] < 0:
-    print("Error with cube pattern")
+print("Starting Line Dancing Pattern")
+return_line = line(copters)
+if return_line[0] < 0:
+    print("Error with line pattern")
     exit(1)
-print("Finished Cube Pattern")
+print("Finished Line Dancing Pattern")
+
+# print("Starting Cube Pattern")
+# return_cube = cube_pattern(copters)
+# if return_cube[0] < 0:
+#     print("Error with cube pattern")
+#     exit(1)
+# print("Finished Cube Pattern")
 
 # Land them
 land_drones()
@@ -166,14 +166,16 @@ indexes = [0, 1, 2, 3, 4]
 
 # line plot
 # f = plt.figure(1)
-# for i in indexes:
-#     plt.plot(return_line[2][i], return_line[1][i], label="Drone %d"%(i+1))
+for i in indexes:
+    plt.plot(return_line[2][i], return_line[1][i], label="Drone %d"%(i+1))
+plt.xlabel("time in seconds")
+plt.ylabel("altitude")
 
 # cube plot
 #g = plt.figure(2)
-for i in indexes:
-    plt.plot(return_cube[2][i], return_cube[1][i], label="Drone %d"%(i+1))
-plt.xlabel("longitude")
-plt.ylabel("latitude")
+# for i in indexes:
+#     plt.plot(return_cube[2][i], return_cube[1][i], label="Drone %d"%(i+1))
+# plt.xlabel("longitude")
+# plt.ylabel("latitude")
 
 plt.show()
