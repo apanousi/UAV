@@ -11,8 +11,10 @@ Full documentation is provided at http://python.dronekit.io/examples/simple_goto
 import time
 from dronekit_sitl import SITL
 from dronekit import Vehicle, VehicleMode, connect, LocationGlobalRelative
-from line_pattern import * 
-#from cube_pattern import * 
+from line_pattern import line
+from cube_pattern import cube_pattern 
+import matplotlib.pyplot as plt
+import numpy as np
 
 copters = []
 sitls = []
@@ -135,14 +137,20 @@ arm_and_takeoff(10)
 #point1 = LocationGlobalRelative(50, -86.241484,0)
 #travel_north(point1)
 
-#cube_pattern()
-
 # CONNECT TO PATTERNS
 print("Starting Line Dancing Pattern")
-if line(copters) < 0:
+return_line = line(copters)
+if return_line[0] < 0:
     print("Error with line pattern")
     exit(1)
 print("Finished Line Dancing Pattern")
+
+print("Starting Cube Pattern")
+return_cube = cube_pattern(copters)
+if return_cube[0] < 0:
+    print("Error with cube pattern")
+    exit(1)
+print("Finished Cube Pattern")
 
 # Land them
 land_drones()
@@ -154,3 +162,26 @@ for c in copters:
 # Shut down simulators
 for s in sitls:
     s.stop()
+
+indexes = [0, 1, 2, 3, 4]
+
+# line plot
+f = plt.figure(1)
+
+# print(return_line[2])
+# print(return_line[1])
+# print(len(return_line[2]))
+# print(len(return_line[1]))
+for i in indexes:
+    plt.plot(return_line[2], return_line[1][i], label="Drone %d"%(i+1))
+plt.xlabel("time in seconds")
+plt.ylabel("altitude")
+
+# cube plot
+g = plt.figure(2)
+for i in indexes:
+    plt.plot(return_cube[2][i], return_cube[1][i], label="Drone %d"%(i+1))
+plt.xlabel("longitude")
+plt.ylabel("latitude")
+
+plt.show()
