@@ -145,12 +145,12 @@ if return_line[0] < 0:
     exit(1)
 print("Finished Line Dancing Pattern")
 
-# print("Starting Cube Pattern")
-# return_cube = cube_pattern(copters)
-# if return_cube[0] < 0:
-#     print("Error with cube pattern")
-#     exit(1)
-# print("Finished Cube Pattern")
+print("Starting Cube Pattern")
+return_cube = cube_pattern(copters)
+if return_cube[0] < 0:
+    print("Error with cube pattern")
+    exit(1)
+print("Finished Cube Pattern")
 
 # Land them
 land_drones()
@@ -166,20 +166,22 @@ for s in sitls:
 indexes = [0, 1, 2, 3, 4]
 
 # line plot
-# f = plt.figure(1)
+f = plt.figure(1)
 
-print(len(return_line[2]))
-print(len(return_line[1]))
+# print(return_line[2])
+# print(return_line[1])
+# print(len(return_line[2]))
+# print(len(return_line[1]))
 for i in indexes:
-    plt.plot(return_line[2][i], return_line[1][i], label="Drone %d"%(i+1))
+    plt.plot(return_line[2], return_line[1][i], label="Drone %d"%(i+1))
 plt.xlabel("time in seconds")
 plt.ylabel("altitude")
 
 # cube plot
-#g = plt.figure(2)
-# for i in indexes:
-#     plt.plot(return_cube[2][i], return_cube[1][i], label="Drone %d"%(i+1))
-# plt.xlabel("longitude")
-# plt.ylabel("latitude")
+g = plt.figure(2)
+for i in indexes:
+    plt.plot(return_cube[2][i], return_cube[1][i], label="Drone %d"%(i+1))
+plt.xlabel("longitude")
+plt.ylabel("latitude")
 
 plt.show()

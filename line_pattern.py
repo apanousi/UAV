@@ -16,6 +16,7 @@ def line(copters):
     indexes = [0, 1, 2, 3, 4]
     for i in indexes:
         alts.append([])
+        alts[i].append(10)
 
     print("line pattern start")
     points = form_increasing_line(copters)
