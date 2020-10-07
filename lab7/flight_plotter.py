@@ -53,7 +53,7 @@ class GraphPlotter:
         self.marker_lon = markerlon
 
     def scatter_plot(self):
-        plt.plot(self.lat1_array,self.lon1_array,linewidth=10,color='gray')
+        plt.plot(self.lat1_array,self.lon1_array,linewidth=10,color='red')
         plt.plot(self.lat2_array,self.lon2_array,linewidth=4,color='blue')
         plt.xlabel(self.xlegend)
         plt.ylabel(self.ylegend)

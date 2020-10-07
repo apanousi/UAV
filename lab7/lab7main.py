@@ -189,12 +189,19 @@ while (get_distance_meters(currentLocationA, targetLocationA) > .05) and (get_di
     distance_to_targetA = get_distance_meters(currentLocationA, targetLocationA)
     distance_to_targetB = get_distance_meters(currentLocationB, targetLocationB)
     
+    #ned
+    nedA = nedcontroller.setNed(currentLocationA, targetLocationA)
+    nedB = nedcontroller.setNed(currentLocationB, targetLocationB)
+    nedcontroller.send_ned_velocity(nedA.north, nedA.east, nedA.down, 1, droneA)
+    nedcontroller.send_ned_velocity(nedB.north, nedB.east, nedB.down, 1, droneB)
+
+
     # add points to plot
     logA.add_data(currentLocationA.lat, currentLocationA.lon)
     logB.add_data(currentLocationB.lat, currentLocationB.lon)
     
     print('Drone A:\n\tDistance:  {0}  Ground speed:  {1}'.format(distance_to_targetA, droneA.groundspeed))
-    print('\nDrone B:\n\tDistance:  {0}  Ground speed:  {1}'.format(distance_to_targetB, droneB.groundspeed))
+    print('Drone B:\n\tDistance:  {0}  Ground speed:  {1}'.format(distance_to_targetB, droneB.groundspeed))
     print("-----")
 
 # Land them
