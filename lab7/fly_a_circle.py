@@ -145,9 +145,9 @@ arm_and_takeoff(10)
 
 # Get current location of vehicle and establish a conceptual circle around it for flying
 center = Location(vehicle.location.global_relative_frame.lat,
-                  vehicle.location.global_relative_frame.lon)  
-radius = .0001
-angle = 0  #Starting angle
+                  vehicle.location.global_relative_frame.lon) #!!!!! COLLISON POINT 
+radius = .0001 # !!!! SET TO DISTANCE
+angle = 0 
 
 # Fly to starting position using waypoint
 currentLocation = center
@@ -166,7 +166,7 @@ nedcontroller = ned_controller()
 waypoint_goto = False
 
 # Fly from one point on the circumference to the next
-while angle <= 360:
+while angle <= 180: # !!! 180 compared to starting angle
 
     # For NED flying compute the NED Velocity vector
     print("\nNew target " + str(angle))
