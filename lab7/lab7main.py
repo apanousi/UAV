@@ -6,10 +6,9 @@ from dronekit_sitl import SITL
 from dronekit import Vehicle, VehicleMode, connect, LocationGlobalRelative
 from flight_plotter import Location, CoordinateLogger, GraphPlotter
 from ned_utilities import ned_controller
-from math import sin, cos, atan2, radians, sqrt
-from generate_vc import generate_vc
-from generate_vc import check_crossingpoint
+from generate_vc import generate_vc, check_crossingpoint
 from collision_circle import flycircle
+from get_dist import get_distance_meters
 
 copters = []
 sitls = []
@@ -113,29 +112,9 @@ def arm_and_takeoff(aTargetAltitude):
             break  
         time.sleep(1)
 
-def get_distance_meters(locationA, locationB):
-    # approximate radius of earth in km
-    R = 6373.0
-
-    lat1 = radians(locationA.lat)
-    lon1 = radians(locationA.lon)
-    lat2 = radians(locationB.lat)
-    lon2 = radians(locationB.lon)
-
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-
-    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-
-    distance = (R * c) * 1000
-
-    # print("Distance (meters):", distance)
-    return distance
-
 # Starting coordinates
 # TODO: get coordinates from user
-coordinates = [[41.714621, -86.241484,0], [41.715721, -86.243484, 0]]
+coordinates = [[41.714621, -86.241484,0], [41.715721, -86.243484, 0]] 
 
 # Copter list
 for n in range(2):
@@ -199,8 +178,6 @@ else: #no collision
 if collision_point == -1:    
     willCollide = False
 
-print(collision_point)
-
 while (get_distance_meters(currentLocationA, targetLocationA) > .05) and (get_distance_meters(currentLocationB,targetLocationB ) > .05):
     currentLocationA = Location(droneA.location.global_relative_frame.lat, droneA.location.global_relative_frame.lon)
     currentLocationB = Location(droneB.location.global_relative_frame.lat, droneB.location.global_relative_frame.lon)
@@ -211,7 +188,7 @@ while (get_distance_meters(currentLocationA, targetLocationA) > .05) and (get_di
     if(willCollide):
         distCollide = get_distance_meters(currentLocationA, collision_point)
 
-    if(willCollide == False or distCollide > 8): 
+    if(willCollide == False or distCollide > 8): #not collide yet 
         nedA = nedcontroller.setNed(currentLocationA, targetLocationA)
         nedB = nedcontroller.setNed(currentLocationB, targetLocationB)
         nedcontroller.send_ned_velocity(nedA.north, nedA.east, nedA.down, 1, droneA)
@@ -222,7 +199,7 @@ while (get_distance_meters(currentLocationA, targetLocationA) > .05) and (get_di
         nedcontroller.send_ned_stop(droneB)
 
         #Circle around
-        flycircle(collision_point, currentLocationA, currentLocationB)
+        flycircle(droneA, droneB, collision_point, currentLocationA, currentLocationB)
 
     # add points to plot
     logA.add_data(currentLocationA.lat, currentLocationA.lon)
