@@ -1,7 +1,18 @@
-def check_crossingpoint(x1,y1,x2,y2,tx1,ty1,tx2,ty2):
+from dronekit import Vehicle, LocationGlobalRelative
+
+def check_crossingpoint(curr1, curr2, targ1, targ2):
                          
     ## check if this crossing point is in the line segment or not (first we need to make sure the boundaries)
     
+    x1 = curr1.lat
+    x2 = curr2.lat
+    y1 = curr1.lon
+    y2 = curr2.lon
+    tx1 = targ1.lat
+    tx2 = targ2.lat
+    ty1 = targ1.lon
+    ty2 = targ2.lon
+
     if x1 < x2:
         ld_start_x  = x1
         ld_target_x = tx1
@@ -49,7 +60,17 @@ def check_crossingpoint(x1,y1,x2,y2,tx1,ty1,tx2,ty2):
         return False
 
 
-def generate_vc(x1,y1,x2,y2,tx1,ty1,tx2,ty2):
+def generate_vc(curr1, curr2, targ1, targ2, alt):
+
+    x1 = curr1.lat
+    x2 = curr2.lat
+    y1 = curr1.lon
+    y2 = curr2.lon
+    tx1 = targ1.lat
+    tx2 = targ2.lat
+    ty1 = targ1.lon
+    ty2 = targ2.lon
+
     # calculating dx & dy
     dx1_tx1 = abs(x1-tx1)
     dy1_ty1 = abs(y1-ty1)
@@ -66,7 +87,7 @@ def generate_vc(x1,y1,x2,y2,tx1,ty1,tx2,ty2):
 
     ## check if their slopes are the same or not, if no, that means they might have a crossing point
     if s1 != s2:
-
+        print("Different slopes")
         ## computing the (virual) crossing point 
         c1  = y1-s1*x1
         c2  = y2-s2*x2
@@ -98,10 +119,11 @@ def generate_vc(x1,y1,x2,y2,tx1,ty1,tx2,ty2):
         ## if the crossing point is in the segments, make the crossing point as VC and return it
         if left1 <= vcx and vcx <= right1 and left2 <= vcx and vcx <= right2:
             print("two segmented lines have a crossing point")
-            return (vcx, vcy)
+            return LocationGlobalRelative(vcx, vcy, alt)
         # ## the crossing point is not in the center, that means we dont need collision avoidance in this case
-        # else:
-        #     print("No crossing point with two segment lines")
+        else:
+            print("No crossing point with two segment lines")
+            return -1
 
     
     ## check if their slope are the same or not, if yes check if they are parallel or overlaps
@@ -114,7 +136,11 @@ def generate_vc(x1,y1,x2,y2,tx1,ty1,tx2,ty2):
         # elif c1 == c2:
         #     ## midpoint of two drones           
         print("they are overlapped")
-        return ( (x1+x2)/2, (y1+y2)/2 )
+        return LocationGlobalRelative((x1+x2)/2, (y1+y2)/2, alt)
+
+    else:
+        print("Error")
+        return -1
 
 ## testing
 #print(check_crossingpoint(2,-3,0,0,4,-3,1,1))

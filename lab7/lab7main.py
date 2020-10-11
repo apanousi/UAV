@@ -187,32 +187,42 @@ print("Flying...")
 currentLocationA = Location(droneA.location.global_relative_frame.lat, droneA.location.global_relative_frame.lon)
 currentLocationB = Location(droneB.location.global_relative_frame.lat, droneB.location.global_relative_frame.lon)
 
+willCollide = True
+distCollide = 0
+
 # get point of collision if they will collide
-if check_crossingpoint(startingLocationA.lat, startingLocationA.lon, startingLocationB.lat, startingLocationB.lon, targetLocationA.lat, targetLocationA.lon, targetLocationB.lat, targetLocationB.lon):
-    collision_point = generate_vc(startingLocationA.lat, startingLocationA.lon, startingLocationB.lat, startingLocationB.lon, targetLocationA.lat, targetLocationA.lon, targetLocationB.lat, targetLocationB.lon)
+if check_crossingpoint(startingLocationA, startingLocationB, targetLocationA, targetLocationB):
+    collision_point = generate_vc(startingLocationA, startingLocationB, targetLocationA, targetLocationB, droneA.location.global_relative_frame.alt)
 else: #no collision
     collision_point = -1
 
-while (get_distance_meters(currentLocationA, targetLocationA) > .05) and (get_distance_meters(currentLocationB, targetLocationB) > .05):
+if collision_point == -1:    
+    willCollide = False
+
+print(collision_point)
+
+while (get_distance_meters(currentLocationA, targetLocationA) > .05) and (get_distance_meters(currentLocationB,targetLocationB ) > .05):
     currentLocationA = Location(droneA.location.global_relative_frame.lat, droneA.location.global_relative_frame.lon)
     currentLocationB = Location(droneB.location.global_relative_frame.lat, droneB.location.global_relative_frame.lon)
     distance_to_targetA = get_distance_meters(currentLocationA, targetLocationA)
     distance_to_targetB = get_distance_meters(currentLocationB, targetLocationB)
     
-    #ned and check if about to collide
-    if(get_distance_meters(currentLocationA, collision_point) < 8): #Too close to intersection point
+    #ned and check if about to collide 
+    if(willCollide):
+        distCollide = get_distance_meters(currentLocationA, collision_point)
+
+    if(willCollide == False or distCollide > 8): 
+        nedA = nedcontroller.setNed(currentLocationA, targetLocationA)
+        nedB = nedcontroller.setNed(currentLocationB, targetLocationB)
+        nedcontroller.send_ned_velocity(nedA.north, nedA.east, nedA.down, 1, droneA)
+        nedcontroller.send_ned_velocity(nedB.north, nedB.east, nedB.down, 1, droneB)
+    else: #Too close to intersection point
         #Stop both
         nedcontroller.send_ned_stop(droneA)
         nedcontroller.send_ned_stop(droneB)
 
         #Circle around
         flycircle(collision_point, currentLocationA, currentLocationB)
-    else:
-        nedA = nedcontroller.setNed(currentLocationA, targetLocationA)
-        nedB = nedcontroller.setNed(currentLocationB, targetLocationB)
-        nedcontroller.send_ned_velocity(nedA.north, nedA.east, nedA.down, 1, droneA)
-        nedcontroller.send_ned_velocity(nedB.north, nedB.east, nedB.down, 1, droneB)
-
 
     # add points to plot
     logA.add_data(currentLocationA.lat, currentLocationA.lon)
