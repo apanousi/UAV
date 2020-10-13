@@ -26,24 +26,26 @@ def fly_to(vehicle, targetLocation, groundspeed):
             break
         time.sleep(1)
 
-
-def flycircle(vehicleA, vehicleB, collision_pt, LocationA, LocationB):
+def flycircle(vehicleA, vehicleB, collision_pt, LocationA, LocationB, nedA, nedB):
     print("CIRCLING.....");
     # Get current location of vehicle and establish a conceptual circle around it for flying
     center = collision_pt #!!!!! COLLISON POINT 
     radius = get_distance_meters(LocationA, collision_pt) # !!!! SET TO DISTANCE
 
     # Get start angle for A & B
-    [azA, elev, sR] = ned2aer(LocationA.north, LocationA.east, LocationA.down)
+    #[azA, elev, sR] = ned2aer(LocationA.north, LocationA.east, LocationA.down)
+    azA = math.atan2(nedA.east, nedA.north) % (2*math.pi)
+    azA = math.degrees(azA)
     print("azA is %d\n", azA)
     start_angleA = azA
     angleA = start_angleA
 
-    [azB, elev, sR] = ned2aer(LocationB.north, LocationB.east, LocationB.down)
+    #[azB, elev, sR] = ned2aer(LocationB.north, LocationB.east, LocationB.down)
+    azB = math.atan2(nedB.east, nedB.north) % (2*math.pi)
+    azB = math.degrees(azB)
     print("azB is %d\n", azB)
     start_angleB = azB
     angleB = start_angleB
-
 
     # Fly to starting position using waypoint
     currentLocation = center
@@ -57,7 +59,7 @@ def flycircle(vehicleA, vehicleB, collision_pt, LocationA, LocationB):
     #log1 = CoordinateLogger()
 
     # Create a NedController
-    #nedcontroller = ned_controller()
+    nedcontroller = ned_controller()
     waypoint_goto = False
 
     # Fly from one point on the circumference to the next
@@ -77,7 +79,18 @@ def flycircle(vehicleA, vehicleB, collision_pt, LocationA, LocationB):
         distance_to_targetB = get_distance_meters(currentLocationB, nextTargetB)
         closestDistanceB = distance_to_targetB
         nedB = nedcontroller.setNed(currentLocationB, nextTargetB)
+        
+        # Change angles
+        azA = math.atan2(nedA.east, nedA.north) % (2*math.pi)
+        azA = math.degrees(azA)
+        print("azA is %d\n", azA)
+        angleA = azA
 
+        #[azB, elev, sR] = ned2aer(LocationB.north, LocationB.east, LocationB.down)
+        azB = math.atan2(nedB.east, nedB.north) % (2*math.pi)
+        azB = math.degrees(azB)
+        print("azB is %d\n", azB)
+        angleB = azB
 
         # Keep going until target is reached
         while distance_to_targetA > 1 and distance_to_targetB > 1:
@@ -109,6 +122,15 @@ def flycircle(vehicleA, vehicleB, collision_pt, LocationA, LocationB):
             # Needed if the ned vectors don't take you to the final target i.e.,
             # You'll need to create another NED.  You could reuse the previous one
             # but recomputing it can mitigate small errors which otherwise build up.
+
+            #Fly with ned
+            currentLocationA = Location(vehicleA.location.global_relative_frame.lat, vehicleA.location.global_relative_frame.lon)
+            currentLocationB = Location(vehicleB.location.global_relative_frame.lat, vehicleB.location.global_relative_frame.lon)
+            nedA = nedcontroller.setNed(currentLocationA, nextTargetA)
+            nedB = nedcontroller.setNed(currentLocationB, nextTargetB)
+            nedcontroller.send_ned_velocity(nedA.north, nedA.east, nedA.down, 1, vehicleA)
+            nedcontroller.send_ned_velocity(nedB.north, nedB.east, nedB.down, 1, vehicleB)
+
 
 #Testing
 LocationA = Location(41, -86.2)

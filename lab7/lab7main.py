@@ -198,7 +198,7 @@ while (get_distance_meters(currentLocationA, targetLocationA) > .05) and (get_di
         distCollide = get_distance_meters(currentLocationA, collision_point)
         print("Collision Distance is %d\n", distCollide)
 
-    if(willCollide == False or distCollide > 10): #not collide yet 
+    if(willCollide == False or distCollide > 10): #not collide yet or already collided 
         nedA = nedcontroller.setNed(currentLocationA, targetLocationA)
         nedB = nedcontroller.setNed(currentLocationB, targetLocationB)
         nedcontroller.send_ned_velocity(nedA.north, nedA.east, nedA.down, 1, droneA)
@@ -206,11 +206,15 @@ while (get_distance_meters(currentLocationA, targetLocationA) > .05) and (get_di
     else: #Too close to intersection point
         print("Start avoiding collision")
         #Stop both
-        nedcontroller.send_ned_stop(droneA)
-        nedcontroller.send_ned_stop(droneB)
+        #nedcontroller.send_ned_velocity(0,0,0,1,droneA)
+        #nedcontroller.send_ned_velocity(0,0,0,1,droneB)
+        #nedcontroller.send_ned_stop(droneA)
+        #nedcontroller.send_ned_stop(droneB)
 
         #Circle around
-        flycircle(droneA, droneB, collision_point, currentLocationA, currentLocationB)
+        flycircle(droneA, droneB, collision_point, currentLocationA, currentLocationB, nedA, nedB)
+        willCollide = False
+
 
     # add points to plot
     logA.add_data(currentLocationA.lat, currentLocationA.lon)
