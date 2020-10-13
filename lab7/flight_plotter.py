@@ -60,5 +60,5 @@ class GraphPlotter:
         plt.title(self.title)
         if self.marker_lat != 0:
             plt.plot([self.marker_lat], [self.marker_lon], "ro", markersize=22)
-        plt.show()
+        #plt.show()
 
