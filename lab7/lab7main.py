@@ -170,13 +170,22 @@ willCollide = True
 distCollide = 0
 
 # get point of collision if they will collide
-if check_crossingpoint(startingLocationA, startingLocationB, targetLocationA, targetLocationB):
-    collision_point = generate_vc(startingLocationA, startingLocationB, targetLocationA, targetLocationB, droneA.location.global_relative_frame.alt)
+#if check_crossingpoint(startingLocationA, startingLocationB, targetLocationA, targetLocationB):
+#    collision_point = generate_vc(startingLocationA, startingLocationB, targetLocationA, targetLocationB, droneA.location.global_relative_frame.alt)
+if check_crossingpoint(coordinates[0], coordinates[1], coordinates[1], coordinates[0]):
+    collision_point = generate_vc(coordinates[0], coordinates[1], coordinates[1], coordinates[0], droneA.location.global_relative_frame.alt)
+
 else: #no collision
     collision_point = -1
 
-if collision_point == -1:    
-    willCollide = False
+#if collision_point == -1:    
+    #willCollide = False    uncomment once other working
+
+#TEMPORARY!!!!!
+print(collision_point)
+collision_point = Location(41.715171, -86.242484)
+print("It will collide? - %b\n", willCollide)
+
 
 while (get_distance_meters(currentLocationA, targetLocationA) > .05) and (get_distance_meters(currentLocationB,targetLocationB ) > .05):
     currentLocationA = Location(droneA.location.global_relative_frame.lat, droneA.location.global_relative_frame.lon)
@@ -187,13 +196,15 @@ while (get_distance_meters(currentLocationA, targetLocationA) > .05) and (get_di
     #ned and check if about to collide 
     if(willCollide):
         distCollide = get_distance_meters(currentLocationA, collision_point)
+        print("Collision Distance is %d\n", distCollide)
 
-    if(willCollide == False or distCollide > 8): #not collide yet 
+    if(willCollide == False or distCollide > 10): #not collide yet 
         nedA = nedcontroller.setNed(currentLocationA, targetLocationA)
         nedB = nedcontroller.setNed(currentLocationB, targetLocationB)
         nedcontroller.send_ned_velocity(nedA.north, nedA.east, nedA.down, 1, droneA)
         nedcontroller.send_ned_velocity(nedB.north, nedB.east, nedB.down, 1, droneB)
     else: #Too close to intersection point
+        print("Start avoiding collision")
         #Stop both
         nedcontroller.send_ned_stop(droneA)
         nedcontroller.send_ned_stop(droneB)
@@ -205,8 +216,8 @@ while (get_distance_meters(currentLocationA, targetLocationA) > .05) and (get_di
     logA.add_data(currentLocationA.lat, currentLocationA.lon)
     logB.add_data(currentLocationB.lat, currentLocationB.lon)
     
-    print('Drone A:\n\tDistance:  {0}  Ground speed:  {1}'.format(distance_to_targetA, droneA.groundspeed))
-    print('Drone B:\n\tDistance:  {0}  Ground speed:  {1}'.format(distance_to_targetB, droneB.groundspeed))
+    print('Drone A:\n\tDistance:  {0}  Ground speed:  {1}  Lat:  {2}  Lon:   {3}'.format(distance_to_targetA, droneA.groundspeed, currentLocationA.lat, currentLocationA.lon))
+    print('Drone B:\n\tDistance:  {0}  Ground speed:  {1}  Lat:  {2}  Lon:   {3}'.format(distance_to_targetB, droneB.groundspeed, currentLocationB.lat, currentLocationB.lon))
     print("-----")
 
 # Land them

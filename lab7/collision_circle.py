@@ -21,7 +21,6 @@ def fly_to(vehicle, targetLocation, groundspeed):
 
     while vehicle.mode.name == "GUIDED":
         remainingDistance = get_distance_meters(currentTargetLocation, vehicle.location.global_frame)
-        print(remainingDistance)
         if remainingDistance < 1:
             print("Reached target")
             break
@@ -29,7 +28,7 @@ def fly_to(vehicle, targetLocation, groundspeed):
 
 
 def flycircle(vehicleA, vehicleB, collision_pt, LocationA, LocationB):
-
+    print("CIRCLING.....");
     # Get current location of vehicle and establish a conceptual circle around it for flying
     center = collision_pt #!!!!! COLLISON POINT 
     radius = get_distance_meters(LocationA, collision_pt) # !!!! SET TO DISTANCE

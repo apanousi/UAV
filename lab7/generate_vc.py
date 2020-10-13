@@ -4,14 +4,14 @@ def check_crossingpoint(curr1, curr2, targ1, targ2):
                          
     ## check if this crossing point is in the line segment or not (first we need to make sure the boundaries)
     
-    x1 = curr1.lat
-    x2 = curr2.lat
-    y1 = curr1.lon
-    y2 = curr2.lon
-    tx1 = targ1.lat
-    tx2 = targ2.lat
-    ty1 = targ1.lon
-    ty2 = targ2.lon
+    x1 = curr1[0]
+    x2 = curr2[0]
+    y1 = curr1[1]
+    y2 = curr2[1]
+    tx1 = targ1[0]
+    tx2 = targ2[0]
+    ty1 = targ1[1]
+    ty2 = targ2[1]
 
     if x1 < x2:
         ld_start_x  = x1
@@ -62,14 +62,14 @@ def check_crossingpoint(curr1, curr2, targ1, targ2):
 
 def generate_vc(curr1, curr2, targ1, targ2, alt):
 
-    x1 = curr1.lat
-    x2 = curr2.lat
-    y1 = curr1.lon
-    y2 = curr2.lon
-    tx1 = targ1.lat
-    tx2 = targ2.lat
-    ty1 = targ1.lon
-    ty2 = targ2.lon
+    x1 = curr1[0]
+    x2 = curr2[0]
+    y1 = curr1[1]
+    y2 = curr2[1]
+    tx1 = targ1[0]
+    tx2 = targ2[0]
+    ty1 = targ1[1]
+    ty2 = targ2[1]
 
     # calculating dx & dy
     dx1_tx1 = abs(x1-tx1)
