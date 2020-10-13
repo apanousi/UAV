@@ -183,7 +183,7 @@ else: #no collision
 
 #TEMPORARY!!!!!
 print(collision_point)
-collision_point = Location(41.715171, -86.242484)
+#collision_point = Location(41.715171, -86.242484)
 print("It will collide? - %b\n", willCollide)
 
 
