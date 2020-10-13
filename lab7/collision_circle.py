@@ -2,6 +2,7 @@ from dronekit import Vehicle, LocationGlobalRelative
 from ned_utilities import ned_controller
 from flight_plotter import Location
 import math
+import time
 
 from get_dist import get_distance_meters
 
@@ -30,17 +31,15 @@ def flycircle(vehicleA, vehicleB, collision_pt, LocationA, LocationB, nedA, nedB
     print("CIRCLING.....");
     # Get current location of vehicle and establish a conceptual circle around it for flying
     center = collision_pt #!!!!! COLLISON POINT 
-    radius = get_distance_meters(LocationA, collision_pt) # !!!! SET TO DISTANCE
+    radius = get_distance_meters(LocationA, collision_pt)*.0001 # !!!! SET TO DISTANCE
 
     # Get start angle for A & B
-    #[azA, elev, sR] = ned2aer(LocationA.north, LocationA.east, LocationA.down)
     azA = math.atan2(nedA.east, nedA.north) % (2*math.pi)
     azA = math.degrees(azA)
     print("azA is %d\n", azA)
     start_angleA = azA
     angleA = start_angleA
 
-    #[azB, elev, sR] = ned2aer(LocationB.north, LocationB.east, LocationB.down)
     azB = math.atan2(nedB.east, nedB.north) % (2*math.pi)
     azB = math.degrees(azB)
     print("azB is %d\n", azB)
@@ -130,6 +129,7 @@ def flycircle(vehicleA, vehicleB, collision_pt, LocationA, LocationB, nedA, nedB
             nedB = nedcontroller.setNed(currentLocationB, nextTargetB)
             nedcontroller.send_ned_velocity(nedA.north, nedA.east, nedA.down, 1, vehicleA)
             nedcontroller.send_ned_velocity(nedB.north, nedB.east, nedB.down, 1, vehicleB)
+            time.sleep(2.7)
 
 
 #Testing
