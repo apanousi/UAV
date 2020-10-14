@@ -183,13 +183,8 @@ if check_crossingpoint(coordinates[0], coordinates[1], coordinates[1], coordinat
 else: #no collision
     collision_point = -1
 
-#if collision_point == -1:    
-    #willCollide = False    uncomment once other working
-
-#TEMPORARY!!!!!
-#print(collision_point)
-#collision_point = Location(41.715171, -86.242484)
-#print("It will collide? - %b\n", willCollide)
+if collision_point == -1:    
+    willCollide = False    #uncomment once other working
 
 
 while (get_distance_meters(currentLocationA, targetLocationA) > .05) and (get_distance_meters(currentLocationB,targetLocationB ) > .05):
